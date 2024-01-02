@@ -62,6 +62,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Compile Include="Properties\Control.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Properties\Control.Designer.cs">
+      <DependentUpon>Control.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>

@@ -36,12 +36,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
+            this.y_plus = new System.Windows.Forms.PictureBox();
+            this.y_minus = new System.Windows.Forms.PictureBox();
+            this.x_minus = new System.Windows.Forms.PictureBox();
+            this.x_plus = new System.Windows.Forms.PictureBox();
+            this.z_plus = new System.Windows.Forms.PictureBox();
+            this.z_minus = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
             this.gotopoint_btn = new System.Windows.Forms.RadioButton();
             this.xpos = new System.Windows.Forms.TextBox();
@@ -51,12 +51,14 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.move_btn = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
+            this.step_distence = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.y_plus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.y_minus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.x_minus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.x_plus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.z_plus)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.z_minus)).BeginInit();
             this.SuspendLayout();
             // 
             // stepmode_btn
@@ -141,54 +143,67 @@
             this.label3.TabIndex = 7;
             this.label3.Text = "Z";
             // 
-            // pictureBox1
+            // y_plus
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(374, 248);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(128, 142);
-            this.pictureBox1.TabIndex = 8;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.y_plus.Location = new System.Drawing.Point(374, 248);
+            this.y_plus.Name = "y_plus";
+            this.y_plus.Size = new System.Drawing.Size(128, 142);
+            this.y_plus.TabIndex = 8;
+            this.y_plus.TabStop = false;
+            this.y_plus.Click += new System.EventHandler(this.y_plus_Click);
+            this.y_plus.MouseDown += new System.Windows.Forms.MouseEventHandler(this.y_plus_mousedown);
+            this.y_plus.MouseUp += new System.Windows.Forms.MouseEventHandler(this.y_plus_mouseup);
             // 
-            // pictureBox2
+            // y_minus
             // 
-            this.pictureBox2.Location = new System.Drawing.Point(385, 540);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(128, 142);
-            this.pictureBox2.TabIndex = 9;
-            this.pictureBox2.TabStop = false;
+            this.y_minus.Location = new System.Drawing.Point(385, 540);
+            this.y_minus.Name = "y_minus";
+            this.y_minus.Size = new System.Drawing.Size(128, 142);
+            this.y_minus.TabIndex = 9;
+            this.y_minus.TabStop = false;
+            this.y_minus.Click += new System.EventHandler(this.y_minus_Click);
+            this.y_minus.MouseDown += new System.Windows.Forms.MouseEventHandler(this.y_minus_mousedown);
+            this.y_minus.MouseUp += new System.Windows.Forms.MouseEventHandler(this.y_minus_mouseup);
             // 
-            // pictureBox3
+            // x_minus
             // 
-            this.pictureBox3.Location = new System.Drawing.Point(251, 396);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(128, 142);
-            this.pictureBox3.TabIndex = 10;
-            this.pictureBox3.TabStop = false;
+            this.x_minus.Location = new System.Drawing.Point(251, 396);
+            this.x_minus.Name = "x_minus";
+            this.x_minus.Size = new System.Drawing.Size(128, 142);
+            this.x_minus.TabIndex = 10;
+            this.x_minus.TabStop = false;
+            this.x_minus.Click += new System.EventHandler(this.x_minus_Click);
+            this.x_minus.MouseDown += new System.Windows.Forms.MouseEventHandler(this.x_minus_mousedown);
+            this.x_minus.MouseUp += new System.Windows.Forms.MouseEventHandler(this.x_minus_mouseup);
             // 
-            // pictureBox4
+            // x_plus
             // 
-            this.pictureBox4.Location = new System.Drawing.Point(518, 396);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(128, 142);
-            this.pictureBox4.TabIndex = 11;
-            this.pictureBox4.TabStop = false;
+            this.x_plus.Location = new System.Drawing.Point(518, 396);
+            this.x_plus.Name = "x_plus";
+            this.x_plus.Size = new System.Drawing.Size(128, 142);
+            this.x_plus.TabIndex = 11;
+            this.x_plus.TabStop = false;
+            this.x_plus.Click += new System.EventHandler(this.x_plus_Click);
+            this.x_plus.MouseDown += new System.Windows.Forms.MouseEventHandler(this.x_plus_mousedown);
+            this.x_plus.MouseUp += new System.Windows.Forms.MouseEventHandler(this.x_plus_mouseup);
             // 
-            // pictureBox5
+            // z_plus
             // 
-            this.pictureBox5.Location = new System.Drawing.Point(687, 264);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(128, 142);
-            this.pictureBox5.TabIndex = 12;
-            this.pictureBox5.TabStop = false;
+            this.z_plus.Location = new System.Drawing.Point(687, 264);
+            this.z_plus.Name = "z_plus";
+            this.z_plus.Size = new System.Drawing.Size(128, 142);
+            this.z_plus.TabIndex = 12;
+            this.z_plus.TabStop = false;
+            this.z_plus.Click += new System.EventHandler(this.z_plus_Click);
             // 
-            // pictureBox6
+            // z_minus
             // 
-            this.pictureBox6.Location = new System.Drawing.Point(687, 461);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(128, 142);
-            this.pictureBox6.TabIndex = 13;
-            this.pictureBox6.TabStop = false;
+            this.z_minus.Location = new System.Drawing.Point(687, 461);
+            this.z_minus.Name = "z_minus";
+            this.z_minus.Size = new System.Drawing.Size(128, 142);
+            this.z_minus.TabIndex = 13;
+            this.z_minus.TabStop = false;
+            this.z_minus.Click += new System.EventHandler(this.z_minus_Click);
             // 
             // label4
             // 
@@ -276,11 +291,32 @@
             this.move_btn.UseVisualStyleBackColor = true;
             this.move_btn.Click += new System.EventHandler(this.move_btn_Click);
             // 
+            // step_distence
+            // 
+            this.step_distence.Location = new System.Drawing.Point(163, 276);
+            this.step_distence.Multiline = true;
+            this.step_distence.Name = "step_distence";
+            this.step_distence.Size = new System.Drawing.Size(131, 60);
+            this.step_distence.TabIndex = 23;
+            this.step_distence.TextChanged += new System.EventHandler(this.step_distence_TextChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("新細明體", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            this.label8.Location = new System.Drawing.Point(32, 292);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(125, 24);
+            this.label8.TabIndex = 24;
+            this.label8.Text = "step distance";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1285, 742);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.step_distence);
             this.Controls.Add(this.move_btn);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
@@ -290,12 +326,12 @@
             this.Controls.Add(this.xpos);
             this.Controls.Add(this.gotopoint_btn);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.pictureBox6);
-            this.Controls.Add(this.pictureBox5);
-            this.Controls.Add(this.pictureBox4);
-            this.Controls.Add(this.pictureBox3);
-            this.Controls.Add(this.pictureBox2);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.z_minus);
+            this.Controls.Add(this.z_plus);
+            this.Controls.Add(this.x_plus);
+            this.Controls.Add(this.x_minus);
+            this.Controls.Add(this.y_minus);
+            this.Controls.Add(this.y_plus);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -306,12 +342,12 @@
             this.Controls.Add(this.stepmode_btn);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.y_plus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.y_minus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.x_minus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.x_plus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.z_plus)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.z_minus)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -327,12 +363,12 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.PictureBox pictureBox2;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.PictureBox pictureBox6;
+        private System.Windows.Forms.PictureBox y_plus;
+        private System.Windows.Forms.PictureBox y_minus;
+        private System.Windows.Forms.PictureBox x_minus;
+        private System.Windows.Forms.PictureBox x_plus;
+        private System.Windows.Forms.PictureBox z_plus;
+        private System.Windows.Forms.PictureBox z_minus;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RadioButton gotopoint_btn;
         private System.Windows.Forms.TextBox xpos;
@@ -342,6 +378,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Button move_btn;
+        private System.Windows.Forms.TextBox step_distence;
+        private System.Windows.Forms.Label label8;
     }
 }
 
