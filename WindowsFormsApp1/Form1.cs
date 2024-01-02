@@ -209,7 +209,7 @@ namespace WindowsFormsApp1
         {
             if (now_mode == 1)
             {
-              
+                Console.Write("1");
                 set_step_value();
                 axActUtlType1.SetDevice("M1201", 0);//連續移動(滑鼠一值按著)
                 axActUtlType1.SetDevice("M1010", 1);//Y正向
@@ -219,6 +219,7 @@ namespace WindowsFormsApp1
         private void y_plus_mouseup(object sender, MouseEventArgs e)
         {
             PLCcontrol.ManualContinousPause();
+            Console.Write("0");
         }
         private void y_minus_mousedown(object sender, MouseEventArgs e)
         {
