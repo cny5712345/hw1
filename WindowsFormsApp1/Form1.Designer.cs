@@ -72,7 +72,7 @@
             this.stepmode_btn.AutoSize = true;
             this.stepmode_btn.Font = new System.Drawing.Font("新細明體", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.stepmode_btn.Location = new System.Drawing.Point(54, 157);
-            this.stepmode_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.stepmode_btn.Margin = new System.Windows.Forms.Padding(2);
             this.stepmode_btn.Name = "stepmode_btn";
             this.stepmode_btn.Size = new System.Drawing.Size(78, 19);
             this.stepmode_btn.TabIndex = 0;
@@ -86,7 +86,7 @@
             this.automode_btn.AutoSize = true;
             this.automode_btn.Font = new System.Drawing.Font("新細明體", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.automode_btn.Location = new System.Drawing.Point(54, 234);
-            this.automode_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.automode_btn.Margin = new System.Windows.Forms.Padding(2);
             this.automode_btn.Name = "automode_btn";
             this.automode_btn.Size = new System.Drawing.Size(84, 19);
             this.automode_btn.TabIndex = 1;
@@ -99,7 +99,7 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(109, 29);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(2);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(201, 100);
@@ -109,7 +109,7 @@
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(371, 29);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(2);
             this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(201, 100);
@@ -118,7 +118,7 @@
             // textBox3
             // 
             this.textBox3.Location = new System.Drawing.Point(637, 29);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(2);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(201, 100);
@@ -162,7 +162,7 @@
             // 
             this.y_plus.Image = ((System.Drawing.Image)(resources.GetObject("y_plus.Image")));
             this.y_plus.Location = new System.Drawing.Point(256, 165);
-            this.y_plus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.y_plus.Margin = new System.Windows.Forms.Padding(2);
             this.y_plus.Name = "y_plus";
             this.y_plus.Size = new System.Drawing.Size(85, 95);
             this.y_plus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -176,7 +176,7 @@
             // 
             this.y_minus.Image = ((System.Drawing.Image)(resources.GetObject("y_minus.Image")));
             this.y_minus.Location = new System.Drawing.Point(257, 360);
-            this.y_minus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.y_minus.Margin = new System.Windows.Forms.Padding(2);
             this.y_minus.Name = "y_minus";
             this.y_minus.Size = new System.Drawing.Size(85, 95);
             this.y_minus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -190,7 +190,7 @@
             // 
             this.x_minus.Image = ((System.Drawing.Image)(resources.GetObject("x_minus.Image")));
             this.x_minus.Location = new System.Drawing.Point(167, 264);
-            this.x_minus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.x_minus.Margin = new System.Windows.Forms.Padding(2);
             this.x_minus.Name = "x_minus";
             this.x_minus.Size = new System.Drawing.Size(85, 95);
             this.x_minus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -205,7 +205,7 @@
             this.x_plus.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.x_plus.Image = ((System.Drawing.Image)(resources.GetObject("x_plus.Image")));
             this.x_plus.Location = new System.Drawing.Point(345, 264);
-            this.x_plus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.x_plus.Margin = new System.Windows.Forms.Padding(2);
             this.x_plus.Name = "x_plus";
             this.x_plus.Size = new System.Drawing.Size(85, 95);
             this.x_plus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -219,7 +219,7 @@
             // 
             this.z_plus.Image = ((System.Drawing.Image)(resources.GetObject("z_plus.Image")));
             this.z_plus.Location = new System.Drawing.Point(458, 176);
-            this.z_plus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.z_plus.Margin = new System.Windows.Forms.Padding(2);
             this.z_plus.Name = "z_plus";
             this.z_plus.Size = new System.Drawing.Size(85, 95);
             this.z_plus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -231,7 +231,7 @@
             // 
             this.z_minus.Image = ((System.Drawing.Image)(resources.GetObject("z_minus.Image")));
             this.z_minus.Location = new System.Drawing.Point(458, 307);
-            this.z_minus.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.z_minus.Margin = new System.Windows.Forms.Padding(2);
             this.z_minus.Name = "z_minus";
             this.z_minus.Size = new System.Drawing.Size(85, 95);
             this.z_minus.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -254,7 +254,7 @@
             this.gotopoint_btn.AutoSize = true;
             this.gotopoint_btn.Font = new System.Drawing.Font("新細明體", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.gotopoint_btn.Location = new System.Drawing.Point(637, 201);
-            this.gotopoint_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.gotopoint_btn.Margin = new System.Windows.Forms.Padding(2);
             this.gotopoint_btn.Name = "gotopoint_btn";
             this.gotopoint_btn.Size = new System.Drawing.Size(87, 19);
             this.gotopoint_btn.TabIndex = 15;
@@ -266,16 +266,17 @@
             // xpos
             // 
             this.xpos.Location = new System.Drawing.Point(673, 236);
-            this.xpos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.xpos.Margin = new System.Windows.Forms.Padding(2);
             this.xpos.Multiline = true;
             this.xpos.Name = "xpos";
             this.xpos.Size = new System.Drawing.Size(151, 41);
             this.xpos.TabIndex = 16;
+            this.xpos.TextChanged += new System.EventHandler(this.xpos_TextChanged);
             // 
             // ypos
             // 
             this.ypos.Location = new System.Drawing.Point(673, 298);
-            this.ypos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.ypos.Margin = new System.Windows.Forms.Padding(2);
             this.ypos.Multiline = true;
             this.ypos.Name = "ypos";
             this.ypos.Size = new System.Drawing.Size(151, 41);
@@ -284,7 +285,7 @@
             // zpos
             // 
             this.zpos.Location = new System.Drawing.Point(673, 360);
-            this.zpos.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.zpos.Margin = new System.Windows.Forms.Padding(2);
             this.zpos.Multiline = true;
             this.zpos.Name = "zpos";
             this.zpos.Size = new System.Drawing.Size(151, 41);
@@ -326,7 +327,7 @@
             // move_btn
             // 
             this.move_btn.Location = new System.Drawing.Point(684, 418);
-            this.move_btn.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.move_btn.Margin = new System.Windows.Forms.Padding(2);
             this.move_btn.Name = "move_btn";
             this.move_btn.Size = new System.Drawing.Size(115, 43);
             this.move_btn.TabIndex = 22;
@@ -338,7 +339,7 @@
             // 
             this.step_distence.Font = new System.Drawing.Font("新細明體", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.step_distence.Location = new System.Drawing.Point(109, 184);
-            this.step_distence.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.step_distence.Margin = new System.Windows.Forms.Padding(2);
             this.step_distence.Multiline = true;
             this.step_distence.Name = "step_distence";
             this.step_distence.Size = new System.Drawing.Size(89, 41);
@@ -397,7 +398,7 @@
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.automode_btn);
             this.Controls.Add(this.stepmode_btn);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
