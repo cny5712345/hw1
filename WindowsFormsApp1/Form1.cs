@@ -18,27 +18,30 @@ namespace WindowsFormsApp1
         public Form1()
         {
             InitializeComponent();
+            move_btn.Enabled = false;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
             int re_num;
-            // form1具現在視窗上時 自動執行
-            axActUtlType1.ActLogicalStationNumber = 0;
-            re_num = axActUtlType1.Open();
-            Console.WriteLine("re _num = ", re_num);
+            //form1具現在視窗上時 自動執行
+            //axActUtlType1.ActLogicalStationNumber = 0;
+            //re_num = axActUtlType1.Open();
+            
 
-            //link(); //連結機台
-            //value_initial();// 初始 x y z 各參數
+            link(); //連結機台
+            value_initial();// 初始 x y z 各參數
 
-            ////設定timer開始讀取各參數(view_label)
-            //TimerCallback callback = new TimerCallback(_do);
-            //timer = new System.Threading.Timer(callback, null, 0, 500);//500毫秒
-            ////ManualAsn PosMoveBtn.Enabled = false;
+            //設定timer開始讀取各參數(view_label)
+            TimerCallback callback = new TimerCallback(_do);
+            timer = new System.Threading.Timer(callback, null, 0, 500);//500毫秒
+            //ManualAsn PosMoveBtn.Enabled = false;
         }
         private void _do(object state)
         {
-            this.BeginInvoke(new agent(setXYZlabel));//委派
+            MyInvoke mi = new MyInvoke(UpdateForm);
+            this.BeginInvoke(mi, new Object[] { "我是Textbox", "haha" });
 
+            this.BeginInvoke(new agent(setXYZlabel));//委派
         }
         delegate void agent();
         private void setXYZlabel()
@@ -52,9 +55,9 @@ namespace WindowsFormsApp1
            + "\nR1020\nR1021\nD1026\nD1027\nR1022\nR1023\nM1122\nM1125"//32-33-34--35-36
            + "\nM1613\nM1614\nM1615", 51);
 
-            textBox1.Text = Math.Round(real_num[0],3).ToString();
-            textBox2.Text = Math.Round(real_num[1], 3).ToString();
-            textBox3.Text = Math.Round(real_num[30], 3).ToString();
+            textBox1.Text = (Math.Round(real_num[0],3) / 10000).ToString();
+            textBox2.Text = (Math.Round(real_num[1], 3) / 10000).ToString();
+            textBox3.Text = (Math.Round(real_num[30], 3) / 10000).ToString();
         }
         public void set_step_value()
         {
@@ -75,7 +78,12 @@ namespace WindowsFormsApp1
 
         private void automode_btn_CheckedChanged(object sender, EventArgs e)
         {
-            
+            now_mode = 1;
+            set_step_value();
+            gotopoint_btn.Checked = false;
+            move_btn.Enabled = false;
+            axActUtlType1.SetDevice("M1201", 0);//連續移動
+            move_btn.Enabled = false;
         }
         private void stepmode_CheckedChanged(object sender, EventArgs e)
         {
@@ -84,7 +92,7 @@ namespace WindowsFormsApp1
             gotopoint_btn.Checked = false;
             move_btn.Enabled = false;
             axActUtlType1.SetDevice("M1201", 1);//步階
-
+            move_btn.Enabled = false;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -113,15 +121,105 @@ namespace WindowsFormsApp1
 
         private void gotopoint_btn_CheckedChanged(object sender, EventArgs e)
         {
-
+            now_mode = 3;
+            move_btn.Enabled = true;
         }
 
         private void move_btn_Click(object sender, EventArgs e)
         {
+            int x_pos, y_pos, z_pos;
+            int SpeedRate = 50;
+            x_pos = Convert.ToInt32(xpos.Text) * 10000;
+            y_pos = Convert.ToInt32(ypos.Text) * 10000;
+            z_pos = Convert.ToInt32(zpos.Text) * 10000;
+            if(now_mode==3)
+            {
+                //CancellationTokenSource x_token = new CancellationTokenSource();
+                //CancellationToken token = x_token.Token;
+                Thread x_go_point = new Thread(() => x_do(x_pos, SpeedRate));
+                Thread y_go_point = new Thread(() => y_do(y_pos, SpeedRate));
+                Thread z_go_point = new Thread(() => z_do(z_pos, SpeedRate));
+                x_go_point.Start();
+                y_go_point.Start();
+                z_go_point.Start();
+            }
 
         }
+        public void x_do(int x_pos, int SpeedRate)
+        {
+            short[] x_short = int2short(x_pos);
+            //寫速度，最後的*100是因為R1002的單位是0.01mm
+            short[] XSpeed = int2short((3000 * SpeedRate / 100) * 100);
+            axActUtlType1.WriteDeviceBlock2("R1002", 2, ref XSpeed[0]);
 
-        
+            //目標位置
+            axActUtlType1.WriteDeviceBlock2("R1000",
+                                         2, ref x_short[0]);
+
+            axActUtlType1.SetDevice("M1002", 1);
+            while (true)
+            {
+                List<Double> return_num = readrandom_Click("D1000\nD1001\nM1105\nM1102", 4);
+                if (Math.Round(return_num[0]) == x_pos)
+                {
+                    //Console.WriteLine("M1105 = "+ return_num[1]);
+                    //Console.WriteLine("M1102 = " + return_num[2]);
+                    break;
+                }
+            }
+            axActUtlType1.SetDevice("M1002", 0);
+        }
+        public void y_do(int y_pos, int SpeedRate)
+        {
+            short[] y_short = int2short(y_pos);
+            //寫速度，最後的*100是因為R1002的單位是0.01mm
+            short[] ySpeed = int2short((3000 * SpeedRate / 100) * 100);
+            axActUtlType1.WriteDeviceBlock2("R1012", 2, ref ySpeed[0]);
+
+            //目標位置
+            axActUtlType1.WriteDeviceBlock2("R1010",
+                                         2, ref y_short[0]);
+
+            axActUtlType1.SetDevice("M1012", 1);
+            while (true)
+            {
+                List<Double> return_num = readrandom_Click("D1010\nD1011\nM1115\nM1112", 4);
+                if (Math.Round(return_num[0]) == y_pos)
+                {
+                    //Console.WriteLine("M1115 = " + return_num[1]);
+                    //Console.WriteLine("M1112 = " + return_num[2]);
+                    break;
+                }
+            }
+            axActUtlType1.SetDevice("M1012", 0);
+        }
+        public void z_do(int z_pos, int SpeedRate)
+        {
+            short[] z_short = int2short(z_pos);
+            //寫速度，最後的*100是因為R1002的單位是0.01mm
+            short[] zSpeed = int2short((3000 * SpeedRate / 100) * 100);
+            axActUtlType1.WriteDeviceBlock2("R1022", 2, ref zSpeed[0]);
+
+            //目標位置
+            axActUtlType1.WriteDeviceBlock2("R1020",
+                                         2, ref z_short[0]);
+
+            axActUtlType1.SetDevice("M1022", 1);
+            while (true)
+            {
+                List<Double> return_num = readrandom_Click("D1020\nD1021", 2);
+                if (Math.Round(return_num[0]) == z_pos)
+                {
+                    //Console.WriteLine("M1115 = " + return_num[1]);
+                    //Console.WriteLine("M1112 = " + return_num[2]);
+                    break;
+                }
+            }
+            axActUtlType1.SetDevice("M1022", 0);
+        }
+
+
+
         public void value_initial()
         {
             //x軸相關
@@ -148,11 +246,9 @@ namespace WindowsFormsApp1
 
             axActUtlType1.SetDevice("M1123", 0);
 
-            axActUtlType1.SetDevice("M1200", 1);
-            axActUtlType1.SetDevice("M1202", 1);
+            //axActUtlType1.SetDevice("M1200", 0);
+            //axActUtlType1.SetDevice("M1202", 0);
 
-
-           
             }
 
         private void step_distence_TextChanged(object sender, EventArgs e)
@@ -196,7 +292,7 @@ namespace WindowsFormsApp1
             if (now_mode == 2)
             {
                 set_step_value();
-                step_move("ZNeg");
+                step_move("z_plus");
             }
                 
         }
@@ -206,7 +302,7 @@ namespace WindowsFormsApp1
             if(now_mode == 2)
             {
                 set_step_value();
-                step_move("ZPos");
+                step_move("z_minus");
             }
             
         }
@@ -218,9 +314,9 @@ namespace WindowsFormsApp1
             { 
                 set_step_value();
                 re_num=axActUtlType1.SetDevice("M1201", 0);//連續移動(滑鼠一值按著)
-                Console.WriteLine("re_num="+ re_num);
+              
                 re_num =axActUtlType1.SetDevice("M1010", 1);//Y正向
-                Console.WriteLine("re_num=" + re_num);
+    
             }
         }
 
@@ -286,7 +382,12 @@ namespace WindowsFormsApp1
 
         private void z_plus_mouseup(object sender, MouseEventArgs e)
         {
-            ManualContinousPause();
+            if (now_mode == 1)
+            {
+                set_step_value();
+                axActUtlType1.SetDevice("M1201", 0);//連續移動(滑鼠一值按著)
+                axActUtlType1.SetDevice("M1020", 0);//X正向
+            }
         }
         private void z_minus_mousedown(object sender, MouseEventArgs e)
         {
@@ -297,19 +398,20 @@ namespace WindowsFormsApp1
                 axActUtlType1.SetDevice("M1021", 1);//Z反向
             }
         }
-
         private void z_minus_mouseup(object sender, MouseEventArgs e)
         {
-            ManualContinousPause();
+            if (now_mode == 1)
+            {
+                set_step_value();
+                axActUtlType1.SetDevice("M1201", 0);//連續移動(滑鼠一值按著)
+                axActUtlType1.SetDevice("M1021", 0);//X正向
+            }
         }
+
 
         private void automode_btn_click(object sender, EventArgs e)
         {
-            now_mode = 1;
-            set_step_value();
-            gotopoint_btn.Checked = false;
-            move_btn.Enabled = false;
-            axActUtlType1.SetDevice("M1201", 0);//連續移動
+            
         }
         private void xpos_TextChanged(object sender, EventArgs e)
         {
@@ -319,7 +421,7 @@ namespace WindowsFormsApp1
         {
             int re_num;
             re_num = axActUtlType1.SetDevice("M1010", 1);//Y正向
-            Console.Write("this="+re_num);
+           
         }
         public List<double> readrandom_Click(string mylabelname, int mydatasize)
         {
@@ -333,6 +435,7 @@ namespace WindowsFormsApp1
             string[] name = mylabelname.Split('\n');
             for (int i = 0; i < mydataarr.Length; i++)
             {
+                
                 if (name[i].Substring(0, 1) == "D" || name[i].Substring(0, 1) == "R")
                 {
                     realval_list.Add(short2int(mydataarr[i], mydataarr[i + 1]));
@@ -372,7 +475,7 @@ namespace WindowsFormsApp1
             int re_num;
             axActUtlType1.ActLogicalStationNumber = 0;
             re_num = axActUtlType1.Open();
-            Console.WriteLine("re_num = "+ re_num);
+         
         }
         public void writedevice(string mylabelname, int mydatasize, double devicedata)
         {
@@ -386,7 +489,7 @@ namespace WindowsFormsApp1
                 return_num = axActUtlType1.WriteDeviceBlock2(mylabelname,
                                              mydatasize,
                                      ref devicedata_arr[0]);
-                Console.WriteLine(return_num);
+             
             }
             catch (Exception exception)
             {
@@ -401,22 +504,22 @@ namespace WindowsFormsApp1
         {
             axActUtlType1.SetDevice("M1201", 1);//連續移動(滑鼠按一次只移動一定距離)
             //X正向 
-            if (axis == "x_plus")
+            if (axis == "x_minus")
             {
-                axActUtlType1.SetDevice("M1001", 1);
+                axActUtlType1.SetDevice("M1000", 1);
                 while (true)
                 {
-                    List<double> _ReadVal = readrandom_Click("M1101\nM1105", 2);
+                    List<double> _ReadVal = readrandom_Click("M1100\nM1105", 2);
                     if (_ReadVal[0] == 1 && _ReadVal[1] == 0)
                     {
                         break;
                     }
                 }
-                axActUtlType1.SetDevice("M1001", 0);
+                axActUtlType1.SetDevice("M1000", 0);
 
             }
             //X負向 
-            else if (axis == "x_minus")
+            else if (axis == "x_plus")
             {
                 axActUtlType1.SetDevice("M1001", 1);
                 while (true)
@@ -485,6 +588,126 @@ namespace WindowsFormsApp1
             axActUtlType1.SetDevice("M1011", 0);//Y反向                                         
             axActUtlType1.SetDevice("M1020", 0);//Z正向                                        
             axActUtlType1.SetDevice("M1021", 0);//Z反向                                     
+        }
+
+        private void gohome_btn(object sender, EventArgs e)
+        {
+            Thread gohome = new Thread(new ThreadStart(gohome_do));
+            gohome.Start();
+        }
+        public void gohome_do()
+        {
+            //z軸
+            axActUtlType1.SetDevice("M1023", 1);
+            while (true)
+            {
+                List<double> read_val = readrandom_Click("D1020\nD1021\nM1128", 3);
+                //Console.WriteLine("read_val[0]="+read_val[0]);
+                //Console.WriteLine("read_val[1]=" + read_val[1]);
+                if (Math.Round(read_val[0]) == 3000000 && //OriZ && 
+                    read_val[1] == 0)
+                    break;
+            }
+            axActUtlType1.SetDevice("M1023", 0);
+            Console.Write("z軸賦歸完成");
+
+            //y軸
+            axActUtlType1.SetDevice("M1013", 1);
+            while (true)
+            {
+                List<double> read_val = readrandom_Click("D1010\nD1011\nM1118", 3);
+                if (read_val[0] == 3000000 && //OriZ && 
+                    read_val[1] == 0)
+                    break;
+            }
+            axActUtlType1.SetDevice("M1013", 0);
+
+            //x軸
+            axActUtlType1.SetDevice("M1003", 1);
+            while (true)
+            {
+                List<double> read_val = readrandom_Click("D1000\nD1001\nM1108", 3);
+                if (read_val[0] == 3000000 && //OriZ && 
+                    read_val[1] == 0)
+                    break;
+            }
+            axActUtlType1.SetDevice("M1003", 0);
+
+
+            ////Z軸復歸
+            //axActUtlType1.SetDevice("M1023", 0);
+            //axActUtlType1.SetDevice("M1023", 1);
+            //while (true)
+            //{
+            //    double[] _ReadVal = ReadPLCDataRandom("D1020\nD1021\nM1128", 3);
+
+
+            //    if (_ReadVal[0] == 300 && //OriZ && 
+            //        _ReadVal[1] == 0)
+            //        break;
+            //}
+
+            ////y軸復歸
+            //axActUtlType1.SetDevice("M1013", 0);
+            //axActUtlType1.SetDevice("M1013", 1);
+            //while (true)
+            //{
+            //    double[] _ReadVal = ReadPLCDataRandom("D1010\nD1011\nM1118", 3);
+
+
+            //    if (_ReadVal[0] == 300 && // OriY && 
+            //        _ReadVal[1] == 0)
+            //        break;
+            //}
+
+            ////x軸復歸
+            //axActUtlType1.SetDevice("M1003", 0);
+            //axActUtlType1.SetDevice("M1013", 0);
+            //axActUtlType1.SetDevice("M1003", 1);
+
+            //while (true)
+            //{
+            //    double[] _ReadVal = ReadPLCDataRandom("D1000\nD1001\nM1108", 3);
+
+
+            //    if (_ReadVal[0] == 300 &&//OriX && 
+            //        _ReadVal[1] == 0)
+            //        break;
+            //}
+
+
+
+
+
+            //axActUtlType1.SetDevice("M1003", 0);
+            //axActUtlType1.SetDevice("M1013", 0);
+            //axActUtlType1.SetDevice("M1023", 0);
+
+            //axActUtlType1.SetDevice("M1202", 1);
+            //axActUtlType1.SetDevice("M1202", 0);
+            //axActUtlType1.SetDevice("M1200", 1);
+            //axActUtlType1.SetDevice("M1200", 0);
+
+            //MessageBox.Show(this, "復歸完成!");
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            axActUtlType1.SetDevice("M1202", 1);
+            value_initial();
+            Thread.Sleep(1000);
+            axActUtlType1.SetDevice("M1202", 0);
+            Console.Write("aaaaaaaaaaaaaaaaaaaaaaaa");
+        }
+
+        private void label9_Click(object sender, EventArgs e)
+        {
+          
         }
     }
 }
