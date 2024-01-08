@@ -11,10 +11,11 @@ using System.Threading;
 
 namespace WindowsFormsApp1
 {
+
+
     public partial class Form1 : Form
     {
         int now_mode;
-        System.Threading.Timer timer;
         public Form1()
         {
             InitializeComponent();
@@ -24,40 +25,36 @@ namespace WindowsFormsApp1
         {
             int re_num;
             //form1具現在視窗上時 自動執行
-            //axActUtlType1.ActLogicalStationNumber = 0;
-            //re_num = axActUtlType1.Open();
-            
 
             link(); //連結機台
             value_initial();// 初始 x y z 各參數
-
-            //設定timer開始讀取各參數(view_label)
-            TimerCallback callback = new TimerCallback(_do);
-            timer = new System.Threading.Timer(callback, null, 0, 500);//500毫秒
+            Thread thread = new Thread(new ThreadStart(setXYZlabel));
+            thread.Start();
             //ManualAsn PosMoveBtn.Enabled = false;
         }
-        private void _do(object state)
-        {
-            MyInvoke mi = new MyInvoke(UpdateForm);
-            this.BeginInvoke(mi, new Object[] { "我是Textbox", "haha" });
 
-            this.BeginInvoke(new agent(setXYZlabel));//委派
-        }
         delegate void agent();
         private void setXYZlabel()
-        {
+        {        
+           while(true)
+           {
+                this.Invoke((EventHandler)delegate
+                {
+                    List<double> real_num = readrandom_Click("D1000\nD1001\nD1010\nD1011\nR1000\nR1001\nR1010\nR1011\nD1006\nD1007" //1-2-3-4-5
+            + "\nD1016\nD1017\nR1002\nR1003\nR1012\nR1013\nM1107\nM1117\nM1102\nM1105" //6-7-8--9-10-11-12
+            + "\nM1112\nM1115\nM1209\nM1600\nM1601\nM1602\nM1603\nM1604\nM1605\nM1606" //13-14-15-16-17-18-19-20-21-22
+            + "\nM1607\nM1608\nM1609\nM1610\nM1611\nM1602\nM1002\nM1012\nD1020\nD1021"// 23-24-25-26-27-28-29-30--31
+            + "\nR1020\nR1021\nD1026\nD1027\nR1022\nR1023\nM1122\nM1125"//32-33-34--35-36
+            + "\nM1613\nM1614\nM1615", 51);
+                    textBox1.Text = (Math.Round(real_num[0], 3) / 10000).ToString();
+                    textBox2.Text = (Math.Round(real_num[1], 3) / 10000).ToString();
+                    textBox3.Text = (Math.Round(real_num[30], 3) / 10000).ToString();
 
-            //放 xyz當前位置在面板上
-            List<double> real_num = readrandom_Click("D1000\nD1001\nD1010\nD1011\nR1000\nR1001\nR1010\nR1011\nD1006\nD1007" //1-2-3-4-5
-           + "\nD1016\nD1017\nR1002\nR1003\nR1012\nR1013\nM1107\nM1117\nM1102\nM1105" //6-7-8--9-10-11-12
-           + "\nM1112\nM1115\nM1209\nM1600\nM1601\nM1602\nM1603\nM1604\nM1605\nM1606" //13-14-15-16-17-18-19-20-21-22
-           + "\nM1607\nM1608\nM1609\nM1610\nM1611\nM1602\nM1002\nM1012\nD1020\nD1021"// 23-24-25-26-27-28-29-30--31
-           + "\nR1020\nR1021\nD1026\nD1027\nR1022\nR1023\nM1122\nM1125"//32-33-34--35-36
-           + "\nM1613\nM1614\nM1615", 51);
+                });
+                Thread.Sleep(500);
+                
 
-            textBox1.Text = (Math.Round(real_num[0],3) / 10000).ToString();
-            textBox2.Text = (Math.Round(real_num[1], 3) / 10000).ToString();
-            textBox3.Text = (Math.Round(real_num[30], 3) / 10000).ToString();
+           }
         }
         public void set_step_value()
         {
@@ -121,6 +118,8 @@ namespace WindowsFormsApp1
 
         private void gotopoint_btn_CheckedChanged(object sender, EventArgs e)
         {
+            stepmode_btn.Checked = false;
+            automode_btn.Checked = false;
             now_mode = 3;
             move_btn.Enabled = true;
         }
@@ -313,6 +312,7 @@ namespace WindowsFormsApp1
             if (now_mode == 1)
             { 
                 set_step_value();
+                Console.WriteLine("aaa");
                 re_num=axActUtlType1.SetDevice("M1201", 0);//連續移動(滑鼠一值按著)
               
                 re_num =axActUtlType1.SetDevice("M1010", 1);//Y正向
@@ -709,5 +709,20 @@ namespace WindowsFormsApp1
         {
           
         }
+
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            int ret_num;
+            ret_num = axMMMark1.Initial();
+             axMMMark1.LoadFile("C:/Users/MyUser/Desktop/test0105.ezm");
+            Console.WriteLine("ret_num = " + ret_num);
+        }
+
+
     }
 }
