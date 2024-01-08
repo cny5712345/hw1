@@ -16,6 +16,8 @@ namespace WindowsFormsApp1
     public partial class Form1 : Form
     {
         int now_mode;
+        public static string file_path;
+        public static int redlight_state = 0;
         public Form1()
         {
             InitializeComponent();
@@ -719,10 +721,74 @@ namespace WindowsFormsApp1
         {
             int ret_num;
             ret_num = axMMMark1.Initial();
-             axMMMark1.LoadFile("C:/Users/MyUser/Desktop/test0105.ezm");
+            axMMMark1.LoadFile("C:/Users/MyUser/Desktop/test0105.ezm");
             Console.WriteLine("ret_num = " + ret_num);
         }
 
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            value_initial();
+            axMMMark1.StopMarking();
+            axMMMark1.MarkShutdown();
+            axMMMark1.Finish();
+            System.Environment.Exit(0);
+            
+        }
 
+        private void chose_file_Click(object sender, EventArgs e)
+        {
+            int ret_num = axMMMark1.Initial();
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            // 設定對話方塊的標題
+            openFileDialog.Title = "選擇檔案";
+            // 設定預設的檔案類型過濾
+            openFileDialog.Filter = "所有檔案|*.*";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // 取得選取的檔案路徑
+                file_path = openFileDialog.FileName;
+                path_txt.Text = file_path;
+                axMMMark1.LoadFile(file_path);
+            }
+            axMMMark1.MarkStandBy();
+
+        }
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void preview_Click(object sender, EventArgs e)
+        {
+            //axMMMark1.SetPreviewMode(1);
+
+            int feedback = axMMMark1.StartMarking(3);
+            //axMMMark1.LaserOn();
+        }
+
+        private void stop_preview_Click(object sender, EventArgs e)
+        {
+            //axMMMark1.LaserOff();
+            axMMMark1.StopMarking();
+            axMMMark1.MarkShutdown();
+            
+        }
+
+        private void red_light_Click(object sender, EventArgs e)
+        {
+            if(redlight_state == 0)
+            {
+                red_light_btn.BackColor = Color.Red;
+                redlight_state = 1;
+                axActUtlType1.SetDevice("M1206", 1);
+            }
+            else if(redlight_state == 1)
+            {
+                red_light_btn.BackColor = Color.White;
+                redlight_state = 0;
+                axActUtlType1.SetDevice("M1206", 0);
+            }
+        }
     }
 }

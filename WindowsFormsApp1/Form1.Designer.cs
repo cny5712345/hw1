@@ -44,7 +44,6 @@
             this.x_plus = new System.Windows.Forms.PictureBox();
             this.z_plus = new System.Windows.Forms.PictureBox();
             this.z_minus = new System.Windows.Forms.PictureBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.gotopoint_btn = new System.Windows.Forms.RadioButton();
             this.xpos = new System.Windows.Forms.TextBox();
             this.ypos = new System.Windows.Forms.TextBox();
@@ -69,6 +68,11 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.axMMMark1 = new AxMMMARKLib.AxMMMark();
+            this.chose_file = new System.Windows.Forms.Button();
+            this.path_txt = new System.Windows.Forms.TextBox();
+            this.preview = new System.Windows.Forms.Button();
+            this.stop_preview = new System.Windows.Forms.Button();
+            this.red_light_btn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.y_plus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.y_minus)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.x_minus)).BeginInit();
@@ -262,17 +266,6 @@
             this.z_minus.MouseDown += new System.Windows.Forms.MouseEventHandler(this.z_plus_mousedown);
             this.z_minus.MouseUp += new System.Windows.Forms.MouseEventHandler(this.z_plus_mouseup);
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(70, 17);
-            this.label4.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(51, 12);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "automode";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
-            // 
             // gotopoint_btn
             // 
             this.gotopoint_btn.AutoSize = true;
@@ -387,7 +380,7 @@
             // axActUtlType1
             // 
             this.axActUtlType1.Enabled = true;
-            this.axActUtlType1.Location = new System.Drawing.Point(12, 110);
+            this.axActUtlType1.Location = new System.Drawing.Point(12, 67);
             this.axActUtlType1.Name = "axActUtlType1";
             this.axActUtlType1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axActUtlType1.OcxState")));
             this.axActUtlType1.Size = new System.Drawing.Size(32, 32);
@@ -443,7 +436,7 @@
             this.groupBox1.Size = new System.Drawing.Size(194, 328);
             this.groupBox1.TabIndex = 29;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Text = "步進/寸進模式";
             // 
             // groupBox2
             // 
@@ -461,7 +454,7 @@
             this.groupBox2.Size = new System.Drawing.Size(162, 375);
             this.groupBox2.TabIndex = 30;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
+            this.groupBox2.Text = "移動";
             this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // label10
@@ -497,12 +490,12 @@
             this.groupBox3.Size = new System.Drawing.Size(524, 100);
             this.groupBox3.TabIndex = 29;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "groupBox3";
+            this.groupBox3.Text = "座標";
+            this.groupBox3.Enter += new System.EventHandler(this.groupBox3_Enter);
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.xpos);
-            this.groupBox4.Controls.Add(this.label4);
             this.groupBox4.Controls.Add(this.gotopoint_btn);
             this.groupBox4.Controls.Add(this.move_btn);
             this.groupBox4.Controls.Add(this.ypos);
@@ -515,7 +508,7 @@
             this.groupBox4.Size = new System.Drawing.Size(207, 310);
             this.groupBox4.TabIndex = 31;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "groupBox4";
+            this.groupBox4.Text = "自動模式";
             // 
             // button1
             // 
@@ -545,11 +538,63 @@
             this.axMMMark1.Size = new System.Drawing.Size(373, 374);
             this.axMMMark1.TabIndex = 35;
             // 
+            // chose_file
+            // 
+            this.chose_file.Location = new System.Drawing.Point(952, 28);
+            this.chose_file.Name = "chose_file";
+            this.chose_file.Size = new System.Drawing.Size(75, 23);
+            this.chose_file.TabIndex = 36;
+            this.chose_file.Text = "選擇加工檔";
+            this.chose_file.UseVisualStyleBackColor = true;
+            this.chose_file.Click += new System.EventHandler(this.chose_file_Click);
+            // 
+            // path_txt
+            // 
+            this.path_txt.Location = new System.Drawing.Point(735, 30);
+            this.path_txt.Name = "path_txt";
+            this.path_txt.Size = new System.Drawing.Size(211, 22);
+            this.path_txt.TabIndex = 37;
+            // 
+            // preview
+            // 
+            this.preview.Location = new System.Drawing.Point(1033, 86);
+            this.preview.Name = "preview";
+            this.preview.Size = new System.Drawing.Size(75, 23);
+            this.preview.TabIndex = 38;
+            this.preview.Text = "路徑預覽";
+            this.preview.UseVisualStyleBackColor = true;
+            this.preview.Click += new System.EventHandler(this.preview_Click);
+            // 
+            // stop_preview
+            // 
+            this.stop_preview.Location = new System.Drawing.Point(1114, 86);
+            this.stop_preview.Name = "stop_preview";
+            this.stop_preview.Size = new System.Drawing.Size(75, 23);
+            this.stop_preview.TabIndex = 39;
+            this.stop_preview.Text = "結束預覽";
+            this.stop_preview.UseVisualStyleBackColor = true;
+            this.stop_preview.Click += new System.EventHandler(this.stop_preview_Click);
+            // 
+            // red_light_btn
+            // 
+            this.red_light_btn.Location = new System.Drawing.Point(1085, 30);
+            this.red_light_btn.Name = "red_light_btn";
+            this.red_light_btn.Size = new System.Drawing.Size(52, 48);
+            this.red_light_btn.TabIndex = 40;
+            this.red_light_btn.Text = "紅光";
+            this.red_light_btn.UseVisualStyleBackColor = true;
+            this.red_light_btn.Click += new System.EventHandler(this.red_light_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1198, 495);
+            this.Controls.Add(this.red_light_btn);
+            this.Controls.Add(this.stop_preview);
+            this.Controls.Add(this.preview);
+            this.Controls.Add(this.path_txt);
+            this.Controls.Add(this.chose_file);
             this.Controls.Add(this.axMMMark1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
@@ -561,6 +606,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.y_plus)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.y_minus)).EndInit();
@@ -582,6 +628,7 @@
             this.groupBox4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.axMMMark1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -601,7 +648,6 @@
         private System.Windows.Forms.PictureBox x_plus;
         private System.Windows.Forms.PictureBox z_plus;
         private System.Windows.Forms.PictureBox z_minus;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.RadioButton gotopoint_btn;
         private System.Windows.Forms.TextBox xpos;
         private System.Windows.Forms.TextBox ypos;
@@ -626,6 +672,11 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
         private AxMMMARKLib.AxMMMark axMMMark1;
+        private System.Windows.Forms.Button chose_file;
+        private System.Windows.Forms.TextBox path_txt;
+        private System.Windows.Forms.Button preview;
+        private System.Windows.Forms.Button stop_preview;
+        private System.Windows.Forms.Button red_light_btn;
     }
 }
 
